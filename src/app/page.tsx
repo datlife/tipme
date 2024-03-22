@@ -45,7 +45,7 @@ const FeelingGood: React.FC = () => {
       <h1
         className="feeling-good-title"
         contentEditable={true}
-        onInput={(e) => setTitle(e.target.value)}
+        onInput={(e) => setTitle((e.target as HTMLHeadingElement).textContent || '')}
       >
         {title}
       </h1>
@@ -63,7 +63,7 @@ const FeelingGood: React.FC = () => {
               <div className="flippy-front">
                 <p
                   contentEditable={true}
-                  onInput={(e) => handleOptionChange(option.id, e.target.value)}
+                  onInput={(e) => handleOptionChange(option.id, (e.target as HTMLParagraphElement).textContent || '')}
                 >
                   {option.text}
                 </p>
