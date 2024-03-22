@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+.feeling-good-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  text-align: center;
+}
+  
+h1.feeling-good-title {
+  margin: 1rem;
+  font-size: 3.5rem;
+  font-weight: bolder;
+}
+  
+.flippy-boxes {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  font-size: 3.5rem;
+  font-weight: bolder;
+}
+  
+.flippy-box {
+  width: calc(33.33% - 1rem);
+  margin: 0.5rem;
+  background-color: #002aff6f;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5rem;
+  transition: transform 0.5s ease-in-out;
+  height: 40vh;
+  cursor: pointer;
+  display: flex; /* Make the box a flex container */
+  align-items: center; /* Align content vertically in the center */
+  justify-content: center; /* Align content horizontally in the center */
+}
+  
+.flippy-box.selected {
+  transform: rotateY(180deg);
+}
+  
+.flippy-inner {
+  position: relative;
+  height: 50%;
+  width: 100%;
+  text-align: center;
+  backface-visibility: hidden;
+}
+  
+.flippy-front, .flippy-back {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transition: transform 0.5s ease-in-out;
+}
+  
+.flippy-front {
+  transform: rotateY(0deg);
+}
+  
+.flippy-back {
+  transform: rotateY(180deg);
+  background-color: #45495d6f;
+}
+  
+.flippy-front p, .flippy-back p {
+  font-size: 2rem;
+}
