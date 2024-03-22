@@ -13,7 +13,7 @@ interface Option {
 const FeelingGood: React.FC = () => {
 
   const DEFAULT_TEXT = {
-    Title: "Feeling tipsy 🥺🔥🫵"
+    Title: "Feeling tipsy 🥺"
   }
   const [selectedOption, setSelectedOption] = useState<Option["id"] | null>(
     null
