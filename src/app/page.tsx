@@ -6,8 +6,8 @@ import styles from "../styles/styles.module.css"; // Adjust the path if needed
 
 interface Option {
   id: string;
-  text: string;
-  emoji?: string; // Optional emoji for the option
+  front: string;
+  back: string; // Optional emoji for the option
 }
 
 const FeelingGood: React.FC = () => {
@@ -20,22 +20,26 @@ const FeelingGood: React.FC = () => {
   );
   const [title, setTitle] = useState<string>(DEFAULT_TEXT.Title); // Default title
   const [options, setOptions] = useState<Option[]>([
-    { id: "a", text: "A 🫶🏻", emoji: "Cheek kiss" },
-    { id: "b", text: "B 🔥", emoji: "A hug" },
-    { id: "c", text: "C 🚀", emoji: "Good vibes and say cheeeseeee" },
+    { id: "a", front: "A 🫶🏻", back: "Cheek kiss" },
+    { id: "b", front: "B 🔥", back: "A hug" },
+    { id: "c", front: "C 🚀", back: "Have a good time for me!" },
   ]); // Pre-populated options
 
   const handleResetTitle = () => {
     setTitle(DEFAULT_TEXT.Title); // Reset to default title
   };
-  const handleClick = (optionId: Option["id"]) => {
-    setSelectedOption(optionId);
-  };
 
-  const handleOptionChange = (optionId: Option["id"], newText: string) => {
+  const handleClick = (optionId: Option["id"]) => {
+    setSelectedOption((prevSelectedOption) => 
+      prevSelectedOption === optionId ? null : optionId
+    );
+  };
+  
+
+  const handleOptionChange = (optionId: Option["id"], newText: string, isFront: boolean) => {
     setOptions((prevOptions) =>
       prevOptions.map((option) =>
-        option.id === optionId ? { ...option, text: newText } : option
+        option.id === optionId ? { ...option, ...(isFront ? { front: newText } : { back: newText }) } : option
       )
     );
   };
@@ -43,19 +47,19 @@ const FeelingGood: React.FC = () => {
   return (
     <div className="feeling-good-container">
       <h1
-        className="feeling-good-title"
+        className="feeling-good-title  text-5xl margin-top-2xl"
         contentEditable={true}
-        onInput={(e) => setTitle((e.target as HTMLHeadingElement).textContent || '')}
+        onClick={(e) => setTitle((e.target as HTMLHeadingElement).textContent || '')}
       >
         {title}
       </h1>
       {/* Editable title */}
       <div className="flippy-boxes">
         {options.map((option) => (
-          <div
+          <button
             key={option.id}
-            className={`flippy-box ${
-              selectedOption === option.id ? "Selected" : ""
+            className={`flippy-box text-center bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 ${
+              selectedOption === option.id ? "selected" : ""
             }`}
             onClick={() => handleClick(option.id)}
           >
@@ -63,20 +67,20 @@ const FeelingGood: React.FC = () => {
               <div className="flippy-front">
                 <p
                   contentEditable={true}
-                  onInput={(e) => handleOptionChange(option.id, (e.target as HTMLParagraphElement).textContent || '')}
+                  onClick={(e) => handleOptionChange(option.id, (e.target as HTMLParagraphElement).textContent || '', true)}
                 >
-                  {option.text}
+                  {option.front}
                 </p>
               </div>
               <div className="flippy-back">
-                <p>{option.emoji}</p>
+                <p>{option.back}</p>
               </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
-      <button onClick={handleResetTitle}>Reset Title</button>
-
+      <button className="" onClick={handleResetTitle}>Reset</button>
+      <button className="" onClick={handleResetTitle}>Save change</button>
     </div>
   );
 };

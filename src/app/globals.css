@@ -33,7 +33,7 @@
   
 h1.feeling-good-title {
   margin: 1rem;
-  font-size: 3.5rem;
+  /* font-size: 3.5rem; */
   font-weight: bolder;
 }
   
@@ -41,54 +41,54 @@ h1.feeling-good-title {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: bolder;
 }
   
 .flippy-box {
   width: calc(33.33% - 1rem);
   margin: 0.5rem;
-  background-color: #002aff6f;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5rem;
   transition: transform 0.5s ease-in-out;
-  height: 40vh;
-  cursor: pointer;
-  display: flex; /* Make the box a flex container */
-  align-items: center; /* Align content vertically in the center */
-  justify-content: center; /* Align content horizontally in the center */
+  height: 30vh;
 }
-  
-.flippy-box.selected {
+
+.flippy-box {
+  perspective: 1000px; /* Needed to give the 3D flip effect depth */
+}
+
+.flippy-inner {
+  transform-style: preserve-3d; /* Ensures child elements are in 3D space */
+  transition: transform 0.6s; /* Adjust timing as necessary */
+  width: 100%;
+  height: 100%;
+}
+
+.flippy-box.selected .flippy-inner {
+  transform: rotateY(180deg); /* Flips the .flippy-inner to show the back */
+}
+
+.flippy-front, .flippy-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Hides the back face of the flip */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flippy-front {
+  transform: rotateY(0deg);
+}
+
+.flippy-back {
   transform: rotateY(180deg);
 }
-  
+
 .flippy-inner {
   position: relative;
   height: 50%;
   width: 100%;
-  text-align: center;
   backface-visibility: hidden;
-}
-  
-.flippy-front, .flippy-back {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  transition: transform 0.5s ease-in-out;
-}
-  
-.flippy-front {
-  transform: rotateY(0deg);
-}
-  
-.flippy-back {
-  transform: rotateY(180deg);
-  background-color: #45495d6f;
-}
-  
-.flippy-front p, .flippy-back p {
-  font-size: 2rem;
 }
